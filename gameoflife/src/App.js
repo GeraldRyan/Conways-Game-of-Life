@@ -19,7 +19,14 @@ function App()
 
   // console.log(grid)
   return (
-    <div className="App">
+    <div className="App"
+      style = {{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${numColumns}, 20px)`
+      }}>
+
+
+
       {grid.map((rows, i) =>
         rows.map((col, k) =>
 
