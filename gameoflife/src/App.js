@@ -18,12 +18,20 @@ const operations = [
 
 function App()
 {
-  const [grid, setGrid] = useState(() =>{
+
+  const generateEmptyGrid = () =>
+  {
     const rows = []
-    for (let i = 0; i < numRows; i++){
+    for (let i = 0; i < numRows; i++)
+    {
       rows.push(Array.from(Array(numColumns), () => 0))
     }
     return rows
+  }
+  const [grid, setGrid] = useState(() =>
+  {
+
+    return generateEmptyGrid()
   })
 
   const [running, setRunning] = useState(false)
@@ -31,29 +39,39 @@ function App()
   const runningRef = React.useRef(running)
   runningRef.current = running
 
-  const runSimulation = useCallback(() =>{
-    if (!runningRef.current){
+  const runSimulation = useCallback(() =>
+  {
+    if (!runningRef.current)
+    {
       return
     }
     // simulate
 
-    setGrid(g =>{
-      return produce(g, gridCopy =>{
-        for (let i = 0; i < numRows; i++){
-          for (let k = 0; k < numColumns; k++){
+    setGrid(g =>
+    {
+      return produce(g, gridCopy =>
+      {
+        for (let i = 0; i < numRows; i++)
+        {
+          for (let k = 0; k < numColumns; k++)
+          {
             let neighbors = 0
-            operations.forEach(([x, y]) =>{
+            operations.forEach(([x, y]) =>
+            {
               const newI = i + x
               const newK = k + y
-              if (newI >= 0 && newI < numRows && newK >= 0 && newK < numColumns){
+              if (newI >= 0 && newI < numRows && newK >= 0 && newK < numColumns)
+              {
                 neighbors += g[newI][newK]
               }
             })
 
-            if (neighbors < 2 || neighbors > 3){
+            if (neighbors < 2 || neighbors > 3)
+            {
               gridCopy[i][k] = 0
             }
-            else if (g[i][k] === 0 && neighbors === 3){
+            else if (g[i][k] === 0 && neighbors === 3)
+            {
               gridCopy[i][k] = 1
 
             }
@@ -63,7 +81,7 @@ function App()
       })
     })
 
-    setTimeout(runSimulation, 1000)
+    setTimeout(runSimulation, 500)
   }, [])
 
   // console.log(grid)
@@ -79,7 +97,30 @@ function App()
         }
       }}>
         {running ? 'Stop' : "Start"}</button>
-      <div 
+      <button
+        onClick={() =>
+        {
+          setGrid(generateEmptyGrid())
+        }}
+
+      >Clear
+        </button>
+          <button
+          
+          onClick ={ ()=>{
+            const rows = []
+            for (let i = 0; i < numRows; i++)
+            {
+              rows.push(Array.from(Array(numColumns), () => (Math.random() >0.6 ? 1 : 0)))
+            }
+            setGrid(rows)
+          }
+
+
+          }>
+            Random
+          </button>
+      <div
         style={{
           display: 'grid',
           gridTemplateColumns: `repeat(${numColumns}, 20px)`
