@@ -142,7 +142,7 @@ function App() {
         </label>
         <input type="submit" value="Submit" />
         <label htmlFor="speed">Speed</label>
-        <input type="range" min="10" max="1000" defaultValue="200" className="slider" name="speed"
+        <input type="range" direction="rtl" min="1" max="2000" defaultValue="200" className="slider" name="speed" id="speed"
         onChange = {handleSlideChange}
         
         />
