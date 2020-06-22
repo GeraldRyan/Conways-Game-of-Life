@@ -6,6 +6,7 @@ import Sidebar from "./sidebar";
 const numRows = 50;
 const numColumns = 50;
 let currentGen = 0
+let once = false
 
 const operations = [
   [0, 1],
@@ -68,8 +69,8 @@ currentGen++
         }
       });
     });
-
-    setTimeout(runSimulation, 50);
+    if (!once){
+    setTimeout(runSimulation, 50)};
   }, []);
 
   // console.log(grid)
@@ -106,6 +107,18 @@ currentGen++
       >
         Random
       </button>
+      <button>View Rules</button>
+      <button
+        onClick={() => {
+          setRunning(!running);
+          if (!running) {
+            once = true
+            runningRef.current = true;
+            runSimulation();
+            once = false
+          }
+        }}
+      >Step One</button>
       <div>Current Generation: {currentGen}</div>
       <div
         style={{
