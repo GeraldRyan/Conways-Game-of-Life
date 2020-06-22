@@ -1,9 +1,11 @@
-import React, { useState, useCallback } from 'react';
-import './App.css';
-import produce from 'immer'
+import React, { useState, useCallback } from "react";
+import "./App.css";
+import produce from "immer";
+import Sidebar from "./sidebar";
 
-const numRows = 50
-const numColumns = 50
+const numRows = 50;
+const numColumns = 50;
+let currentGen = 0
 
 const operations = [
   [0, 1],
@@ -13,147 +15,126 @@ const operations = [
   [-1, -1],
   [1, 1],
   [1, 0],
-  [-1, 0]
-]
+  [-1, 0],
+];
 
-function App()
-{
-
-  const generateEmptyGrid = () =>
-  {
-    const rows = []
-    for (let i = 0; i < numRows; i++)
-    {
-      rows.push(Array.from(Array(numColumns), () => 0))
+function App() {
+  const generateEmptyGrid = () => {
+    const rows = [];
+    for (let i = 0; i < numRows; i++) {
+      rows.push(Array.from(Array(numColumns), () => 0));
     }
-    return rows
-  }
-  const [grid, setGrid] = useState(() =>
-  {
+    return rows;
+  };
+  const [grid, setGrid] = useState(() => {
+    return generateEmptyGrid();
+  });
 
-    return generateEmptyGrid()
-  })
+  const [running, setRunning] = useState(false);
 
-  const [running, setRunning] = useState(false)
+  const runningRef = React.useRef(running);
+  runningRef.current = running;
 
-  const runningRef = React.useRef(running)
-  runningRef.current = running
-
-  const runSimulation = useCallback(() =>
-  {
-    if (!runningRef.current)
-    {
-      return
+  const runSimulation = useCallback(() => {
+    if (!runningRef.current) {
+      return;
     }
     // simulate
-
-    setGrid(g =>
-    {
-      return produce(g, gridCopy =>
-      {
-        for (let i = 0; i < numRows; i++)
-        {
-          for (let k = 0; k < numColumns; k++)
-          {
-            let neighbors = 0
-            operations.forEach(([x, y]) =>
-            {
-              const newI = i + x
-              const newK = k + y
-              if (newI >= 0 && newI < numRows && newK >= 0 && newK < numColumns)
-              {
-                neighbors += g[newI][newK]
+currentGen++
+    setGrid((g) => {
+      return produce(g, (gridCopy) => {
+        for (let i = 0; i < numRows; i++) {
+          for (let k = 0; k < numColumns; k++) {
+            let neighbors = 0;
+            operations.forEach(([x, y]) => {
+              const newI = i + x;
+              const newK = k + y;
+              if (
+                newI >= 0 &&
+                newI < numRows &&
+                newK >= 0 &&
+                newK < numColumns
+              ) {
+                neighbors += g[newI][newK];
               }
-            })
+            });
 
-            if (neighbors < 2 || neighbors > 3)
-            {
-              gridCopy[i][k] = 0
-            }
-            else if (g[i][k] === 0 && neighbors === 3)
-            {
-              gridCopy[i][k] = 1
-
+            if (neighbors < 2 || neighbors > 3) {
+              gridCopy[i][k] = 0;
+            } else if (g[i][k] === 0 && neighbors === 3) {
+              gridCopy[i][k] = 1;
             }
           }
         }
+      });
+    });
 
-      })
-    })
-
-    setTimeout(runSimulation, 500)
-  }, [])
+    setTimeout(runSimulation, 50);
+  }, []);
 
   // console.log(grid)
   return (
     <div className="App">
-      <button onClick={() =>
-      {
-        setRunning(!running)
-        if (!running)
-        {
-          runningRef.current = true
-          runSimulation()
-        }
-      }}>
-        {running ? 'Stop' : "Start"}</button>
       <button
-        onClick={() =>
-        {
-          setGrid(generateEmptyGrid())
-        }}
-
-      >Clear
-        </button>
-          <button
-          
-          onClick ={ ()=>{
-            const rows = []
-            for (let i = 0; i < numRows; i++)
-            {
-              rows.push(Array.from(Array(numColumns), () => (Math.random() >0.6 ? 1 : 0)))
-            }
-            setGrid(rows)
+        onClick={() => {
+          setRunning(!running);
+          if (!running) {
+            runningRef.current = true;
+            runSimulation();
           }
-
-
-          }>
-            Random
-          </button>
+        }}
+      >
+        {running ? "Stop" : "Start"}
+      </button>
+      <button
+        onClick={() => {
+          setGrid(generateEmptyGrid());
+        }}
+      >
+        Clear
+      </button>
+      <button
+        onClick={() => {
+          const rows = [];
+          for (let i = 0; i < numRows; i++) {
+            rows.push(
+              Array.from(Array(numColumns), () => (Math.random() > 0.6 ? 1 : 0))
+            );
+          }
+          setGrid(rows);
+        }}
+      >
+        Random
+      </button>
+      <div>Current Generation: {currentGen}</div>
       <div
         style={{
-          display: 'grid',
-          gridTemplateColumns: `repeat(${numColumns}, 20px)`
-        }}>
-
-
-
+          display: "grid",
+          gridTemplateColumns: `repeat(${numColumns}, 20px)`,
+        }}
+      >
         {grid.map((rows, i) =>
           rows.map((col, k) => (
-
             <div
               key={`${i}-${k}`}
-              onClick={() =>
-              {
-                const newGrid = produce(grid, gridCopy =>
-                {
-                  gridCopy[i][k] = grid[i][k] ? 0 : 1
-                })
-                setGrid(newGrid)
+              onClick={() => {
+                const newGrid = produce(grid, (gridCopy) => {
+                  gridCopy[i][k] = grid[i][k] ? 0 : 1;
+                });
+                setGrid(newGrid);
               }}
               className="grid"
               style={{
                 width: 20,
                 height: 20,
-                backgroundColor: grid[i][k] ? 'black' : undefined,
-                border: "solid 1px black"
-              }}>
-
-            </div>
-
+                backgroundColor: grid[i][k] ? "black" : undefined,
+                border: "solid 1px black",
+              }}
+            ></div>
           ))
         )}
       </div>
+      <Sidebar />
     </div>
   );
 }
