@@ -5,8 +5,8 @@ import Sidebar from "./sidebar";
 
 const numRows = 50;
 const numColumns = 50;
-let currentGen = 0
-let once = false
+let currentGen = 0;
+let once = false;
 
 const operations = [
   [0, 1],
@@ -20,13 +20,17 @@ const operations = [
 ];
 
 function App() {
-  const generateEmptyGrid = () => {
+  const generateEmptyGrid = (r = numRows, c = numColumns) => {
     const rows = [];
     for (let i = 0; i < numRows; i++) {
       rows.push(Array.from(Array(numColumns), () => 0));
     }
     return rows;
   };
+  const [gridSize, setGridSize] = useState({
+    numRows: numRows,
+    numColumns: numColumns,
+  });
   const [grid, setGrid] = useState(() => {
     return generateEmptyGrid();
   });
@@ -41,7 +45,7 @@ function App() {
       return;
     }
     // simulate
-currentGen++
+    currentGen++;
     setGrid((g) => {
       return produce(g, (gridCopy) => {
         for (let i = 0; i < numRows; i++) {
@@ -69,8 +73,9 @@ currentGen++
         }
       });
     });
-    if (!once){
-    setTimeout(runSimulation, 50)};
+    if (!once) {
+      setTimeout(runSimulation, 50);
+    }
   }, []);
 
   // console.log(grid)
@@ -112,14 +117,28 @@ currentGen++
         onClick={() => {
           setRunning(!running);
           if (!running) {
-            once = true
+            once = true;
             runningRef.current = true;
             runSimulation();
-            once = false
+            once = false;
           }
         }}
-      >Step One</button>
+      >
+        Step One
+      </button>
       <div>Current Generation: {currentGen}</div>
+
+
+      <form>
+        <label>
+          Name:
+          <input type="text" placeholder= 'grid size' name="name" />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+      
+      
+      
       <div
         style={{
           display: "grid",
