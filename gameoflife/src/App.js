@@ -7,6 +7,7 @@ const numRows = 50;
 const numColumns = 50;
 let currentGen = 0;
 let once = false;
+let timeout = 50
 
 const operations = [
   [0, 1],
@@ -74,9 +75,14 @@ function App() {
       });
     });
     if (!once) {
-      setTimeout(runSimulation, 50);
+      setTimeout(runSimulation, timeout);
     }
   }, []);
+
+  const handleSlideChange= (e) =>{
+    console.log(e.target.value)
+    timeout = e.target.value
+  } 
 
   // console.log(grid)
   return (
@@ -131,10 +137,16 @@ function App() {
 
       <form>
         <label>
-          Name:
+          Grid Size:
           <input type="text" placeholder= 'grid size' name="name" />
         </label>
         <input type="submit" value="Submit" />
+        <label htmlFor="speed">Speed</label>
+        <input type="range" min="10" max="1000" defaultValue="200" className="slider" name="speed"
+        onChange = {handleSlideChange}
+        
+        />
+
       </form>
       
       

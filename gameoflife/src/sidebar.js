@@ -1,13 +1,15 @@
-import React from 'react'
+import React from "react";
 
-const Sidebar = () =>{
-
-
-
-
+const Sidebar = () => {
   return (
-    <div>This is the sidebar</div>
-  )
-}
+    <div className="sidebarParent">
+      <div>This is the sidebar</div>
+      <label htmlFor="rowrange">rows</label>
+      <input type="range" class="vranger" id='colrange'/>
+      <label htmlFor="colrange">columns</label>
+      <input type="range" class='vranger' id='rowrange'/>
+    </div>
+  );
+};
 
-export default Sidebar
+export default Sidebar;
