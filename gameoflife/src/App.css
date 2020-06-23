@@ -40,3 +40,7 @@
 #speed{
   direction:rtl
 }
+
+#rowrange, #colrange{
+  transform: rotate(90deg)
+}

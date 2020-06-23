@@ -2,12 +2,13 @@ import React, { useState, useCallback } from "react";
 import "./App.css";
 import produce from "immer";
 import Sidebar from "./sidebar";
+import Modal from "react-modal";
 
 const numRows = 50;
 const numColumns = 50;
 let currentGen = 0;
 let once = false;
-let timeout = 50
+let timeout = 50;
 
 const operations = [
   [0, 1],
@@ -79,14 +80,18 @@ function App() {
     }
   }, []);
 
-  const handleSlideChange= (e) =>{
-    console.log(e.target.value)
-    timeout = e.target.value
-  } 
+  const handleSlideChange = (e) => {
+    console.log(e.target.value);
+    timeout = e.target.value;
+  };
 
   // console.log(grid)
   return (
     <div className="App">
+      <Modal isOpen={true}>
+        <h1>Rules</h1>
+        <p>Rule 1</p>
+      </Modal>
       <button
         onClick={() => {
           setRunning(!running);
@@ -134,23 +139,26 @@ function App() {
       </button>
       <div>Current Generation: {currentGen}</div>
 
-
       <form>
         <label>
           Grid Size:
-          <input type="text" placeholder= 'grid size' name="name" />
+          <input type="text" placeholder="grid size" name="name" />
         </label>
         <input type="submit" value="Submit" />
         <label htmlFor="speed">Speed</label>
-        <input type="range" direction="rtl" min="1" max="2000" defaultValue="200" className="slider" name="speed" id="speed"
-        onChange = {handleSlideChange}
-        
+        <input
+          type="range"
+          direction="rtl"
+          min="1"
+          max="2000"
+          defaultValue="200"
+          className="slider"
+          name="speed"
+          id="speed"
+          onChange={handleSlideChange}
         />
-
       </form>
-      
-      
-      
+
       <div
         style={{
           display: "grid",
