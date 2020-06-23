@@ -48,3 +48,6 @@
 li{
   list-style-type: none;
 }
+* {
+  border: 1px solid red;
+}

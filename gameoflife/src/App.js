@@ -36,6 +36,8 @@ function App() {
   const [grid, setGrid] = useState(() => {
     return generateEmptyGrid();
   });
+  const [modalIsOpen, setModalIsOpen] = React.useState(false)
+
 
   const [running, setRunning] = useState(false);
   const runningRef = React.useRef(running);
@@ -96,6 +98,14 @@ function App() {
       >
         Clear
       </button>
+      <button
+        onClick={() => {
+          setModalIsOpen(!modalIsOpen);
+        }}
+      >
+        View Rules
+      </button>
+
       <button
         onClick={() => {
           setRunning(!running);
