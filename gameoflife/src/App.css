@@ -44,3 +44,7 @@
 #rowrange, #colrange{
   transform: rotate(90deg)
 }
+
+li{
+  list-style-type: none;
+}

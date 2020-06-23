@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import "./App.css";
 import produce from "immer";
 import Sidebar from "./sidebar";
-import Modal from "react-modal";
+import Rules from './Rules'
 
 const numRows = 50;
 const numColumns = 50;
@@ -38,7 +38,6 @@ function App() {
   });
 
   const [running, setRunning] = useState(false);
-const [modalIsOpen, setModalIsOpen] = useState(false)
   const runningRef = React.useRef(running);
   runningRef.current = running;
 
@@ -88,19 +87,15 @@ const [modalIsOpen, setModalIsOpen] = useState(false)
   // console.log(grid)
   return (
     <div className="App">
-      <button onClick={()=>{
-        setModalIsOpen((!modalIsOpen))
-      }}>
-        View Rules</button>
-      <Modal isOpen={modalIsOpen}
-      onRequestClose={()=>{setModalIsOpen(!modalIsOpen)}}
+
+      <Rules></Rules>
+      <button
+        onClick={() => {
+          setGrid(generateEmptyGrid());
+        }}
       >
-        <h1>Rules</h1>
-        <p>Rule 1</p>
-        <button onClick={()=>{
-          setModalIsOpen(!modalIsOpen)
-        }}>Close</button>
-      </Modal>
+        Clear
+      </button>
       <button
         onClick={() => {
           setRunning(!running);
@@ -111,13 +106,6 @@ const [modalIsOpen, setModalIsOpen] = useState(false)
         }}
       >
         {running ? "Stop" : "Start"}
-      </button>
-      <button
-        onClick={() => {
-          setGrid(generateEmptyGrid());
-        }}
-      >
-        Clear
       </button>
       <button
         onClick={() => {
