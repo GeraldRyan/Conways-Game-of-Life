@@ -4,8 +4,6 @@ import produce from "immer";
 import Sidebar from "./sidebar";
 import Rules from "./Rules";
 
-const numRows = 50;
-const numColumns = 50;
 let currentGen = 0;
 let once = false;
 let timeout = 50;
@@ -22,6 +20,10 @@ const operations = [
 ];
 
 function App() {
+  const [numRows, setNumRows] = useState(50);
+  const [numColumns, setNumColumns] = useState(50);
+
+
   const generateEmptyGrid = (r = numRows, c = numColumns) => {
     const rows = [];
     for (let i = 0; i < numRows; i++) {
@@ -29,10 +31,7 @@ function App() {
     }
     return rows;
   };
-  const [gridSize, setGridSize] = useState({
-    numRows: numRows,
-    numColumns: numColumns,
-  });
+
   const [grid, setGrid] = useState(() => {
     return generateEmptyGrid();
   });
@@ -84,10 +83,17 @@ function App() {
     timeout = e.target.value;
   };
 const handleRowRange = (e) =>{
-  console.log(e.target.value);
-  
+  console.log(`number of rows: ${e.target.value}`);
+  setNumRows(e.target.value)
   setGrid(generateEmptyGrid())
-
+}
+const handleColRange = (e) =>{
+  console.log(`number of columns: ${e.target.value}`);
+  setNumColumns(e.target.value)
+  setTimeout(() => {
+    setGrid(generateEmptyGrid())
+    
+  }, 1000);
 }
 
 
@@ -210,7 +216,7 @@ const handleRowRange = (e) =>{
               min="10"
               max="100"
               defaultValue="50"
-              id="colrange"
+              id="rowrange"
               onChange={handleRowRange}
             />
             <label htmlFor="colrange">columns</label>
@@ -218,9 +224,11 @@ const handleRowRange = (e) =>{
               type="range"
               className="vranger"
               min="10"
-              max="100"
+              max="50"
               defaultValue="50"
-              id="rowrange"
+              id="colrange"
+              // onChange={handleColRange} TODO - Fix bug,. Buggy for some reason
+
             />
             </div>
           </div>

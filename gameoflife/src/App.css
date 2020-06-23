@@ -64,9 +64,9 @@ li{
 .flexcontainer{
   display:flex
 }
-form{
+/* form{
   border:1px solid red
-}
+} */
 
 input[type=range] {
 /* height:inherit;
