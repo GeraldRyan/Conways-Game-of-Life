@@ -48,6 +48,31 @@
 li{
   list-style-type: none;
 }
-* {
+/* * {
   border: 1px solid red;
+} */
+
+/* .gameContainer{
+  background-color: green;
+} */
+
+.sidebar{
+  margin-top:200px;
+  margin-left:100px
+}
+
+.flexcontainer{
+  display:flex
+}
+form{
+  border:1px solid red
+}
+
+input[type=range] {
+/* height:inherit;
+  margin: inherit;
+  width: inherit; */
+}
+.gridsizer{
+  display:flex
 }
