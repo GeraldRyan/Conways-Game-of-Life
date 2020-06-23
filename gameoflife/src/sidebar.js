@@ -5,9 +5,9 @@ const Sidebar = () => {
     <div className="sidebarParent">
       <div>This is the sidebar</div>
       <label htmlFor="rowrange">rows</label>
-      <input type="range" class="vranger" id='colrange'/>
+      <input type="range" className="vranger" id='colrange'/>
       <label htmlFor="colrange">columns</label>
-      <input type="range" class='vranger' id='rowrange'/>
+      <input type="range" className='vranger' id='rowrange'/>
     </div>
   );
 };

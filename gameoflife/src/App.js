@@ -38,7 +38,7 @@ function App() {
   });
 
   const [running, setRunning] = useState(false);
-
+const [modalIsOpen, setModalIsOpen] = useState(false)
   const runningRef = React.useRef(running);
   runningRef.current = running;
 
@@ -88,9 +88,18 @@ function App() {
   // console.log(grid)
   return (
     <div className="App">
-      <Modal isOpen={true}>
+      <button onClick={()=>{
+        setModalIsOpen((!modalIsOpen))
+      }}>
+        View Rules</button>
+      <Modal isOpen={modalIsOpen}
+      onRequestClose={()=>{setModalIsOpen(!modalIsOpen)}}
+      >
         <h1>Rules</h1>
         <p>Rule 1</p>
+        <button onClick={()=>{
+          setModalIsOpen(!modalIsOpen)
+        }}>Close</button>
       </Modal>
       <button
         onClick={() => {
