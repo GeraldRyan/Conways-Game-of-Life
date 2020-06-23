@@ -22,6 +22,7 @@ const operations = [
 function App() {
   const [numRows, setNumRows] = useState(50);
   const [numColumns, setNumColumns] = useState(50);
+  
 
 
   const generateEmptyGrid = (r = numRows, c = numColumns) => {
@@ -153,11 +154,6 @@ const handleColRange = (e) =>{
           <div>Current Generation: {currentGen}</div>
 
           <form>
-            <label>
-              Grid Size:
-              <input type="text" placeholder="grid size" name="name" />
-            </label>
-            <input type="submit" value="Submit" />
             <label htmlFor="speed">Speed</label>
             <input
               type="range"
@@ -203,10 +199,6 @@ const handleColRange = (e) =>{
         <div className="sidebar">
           <div className="sidebarParent">
             <div>
-              <button
-                onClick={() => {
-                  setModalIsOpen(!modalIsOpen);
-                }}>View Rules</button>
             </div>
             <div className="gridsizer">
             <label htmlFor="rowrange">rows</label>
@@ -218,8 +210,9 @@ const handleColRange = (e) =>{
               defaultValue="50"
               id="rowrange"
               onChange={handleRowRange}
-            />
+              />
             <label htmlFor="colrange">columns</label>
+
             <input
               type="range"
               className="vranger"
@@ -231,6 +224,10 @@ const handleColRange = (e) =>{
 
             />
             </div>
+          </div>
+          <div style={{marginTop:"150px"}}>
+
+          <Rules></Rules>
           </div>
         </div>
       </div>
