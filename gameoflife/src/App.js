@@ -36,7 +36,6 @@ function App() {
   const [grid, setGrid] = useState(() => {
     return generateEmptyGrid();
   });
-  const [modalIsOpen, setModalIsOpen] = React.useState(false);
   const [running, setRunning] = useState(false);
   const runningRef = React.useRef(running);
   runningRef.current = running;
@@ -196,7 +195,7 @@ const handleColRange = (e) =>{
             )}
           </div>
         </div>
-        <div className="sidebar">
+        {/* <div className="sidebar">
           <div className="sidebarParent">
             <div>
             </div>
@@ -229,7 +228,7 @@ const handleColRange = (e) =>{
 
           <Rules></Rules>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
