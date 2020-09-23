@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a python implementation of Conway's Game of Life on the web!  
+This is a JS implementation of Conway's Game of Life on the web!  
 
 ## Installation
 
